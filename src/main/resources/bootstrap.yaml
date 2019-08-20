@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: account-service
+#  cloud:
+#    config:
+#      uri: http://localhost:8888
+#      fail-fast: true
+#      password: 1234
+#      username: user
+  main:
+    allow-bean-definition-overriding: true #i dont remember why but i think there is a bug with spring cloud and OAuth2ClientContext
+
+logging:
+  level:
+    org.springframework: TRACE
+
+server:
+  port: 8022
+  servlet:
+    context-path: /accounts
+
+security:
+  oauth2:
+    client:
+      clientId: account-service
+      clientSecret: 1234
+      accessTokenUri: http://auth-service:8011/uaa/oauth/token
+      #accessTokenUri: http://localhost:8012/uaa/oauth/token
+      grant-type: client_credentials
+      scope: server
+    resource:
+      #tokenInfoUri: http://auth-service:8011/uaa/oauth/check_token
+      #userInfoUri: http://localhost:8012/uaa/user/current
+      userInfoUri: http://auth-service:8011/uaa/user/current
+
+
+#feign:
+#  hystrix:
+#    enabled: true
